@@ -2,88 +2,175 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Shop Rèm Hải Nam</title>
+<title>Shop Rèm Hải Nam – Rèm chống nắng cao cấp</title>
+<meta name="description" content="Shop Rèm Hải Nam chuyên rèm chống nắng, rèm dán tường, không khoan, giao hàng toàn quốc.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{margin:0;font-family:Arial;background:#f2f2f2}
-.header{background:#c62828;color:#fff;padding:15px;text-align:center;font-size:20px;font-weight:bold}
-.banner img{width:100%}
-.section{padding:15px;background:#fff;margin-bottom:10px}
-.price{color:red;font-size:22px;font-weight:bold}
-.combo label{display:block;padding:8px;border:1px solid #ddd;border-radius:8px;margin:6px 0}
+body{font-family:Arial;background:#f5f5f5;margin:0}
+.container{max-width:420px;margin:auto;background:#fff}
+.header{background:#b30000;color:#fff;padding:15px;text-align:center}
+.timer{display:flex;justify-content:center;gap:10px}
+.timer div{background:#fff;color:#b30000;padding:6px 12px;border-radius:6px;font-size:20px}
+.section{padding:15px}
 input,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #ccc}
-button{width:100%;padding:15px;background:red;color:#fff;border:none;border-radius:8px;font-size:18px}
-.timer{display:flex;justify-content:center;gap:10px;margin:10px 0}
-.timer div{background:#000;color:#fff;padding:8px 12px;border-radius:6px}
+button{background:#e60000;color:#fff;width:100%;padding:15px;border:none;border-radius:10px;font-size:18px}
+.product img{width:100%;border-radius:10px}
+.radio{margin:6px 0}
 </style>
 </head>
-
 <body>
-<div class="header">SHOP RÈM HẢI NAM</div>
 
-<div class="banner">
-<img src="https://i.imgur.com/j6Q9J5B.jpg">
-</div>
+<div class="container">
 
-<div class="section">
-<div class="price">🔥 Giảm giá chỉ hôm nay</div>
+<div class="header">
+<h2>SHOP RÈM HẢI NAM</h2>
+<p>Nhận ưu đãi ngay</p>
 <div class="timer">
 <div id="m">10</div>
 <div id="s">00</div>
 </div>
 </div>
 
-<div class="section combo">
-<h3>Chọn combo</h3>
-<label><input type="radio" name="combo" value="Rèm 1m - 199k" checked> Rèm 1m - 199k</label>
-<label><input type="radio" name="combo" value="Rèm 2m - 349k"> Rèm 2m - 349k</label>
-<label><input type="radio" name="combo" value="Rèm 3m - 499k"> Rèm 3m - 499k</label>
+<div class="section product">
+<img src="https://i.imgur.com/9Q9ZQZB.jpg" alt="Rèm chống nắng cao cấp">
 </div>
 
 <div class="section">
-<h3>Thông tin khách hàng</h3>
 <input id="name" placeholder="Họ và tên">
 <input id="phone" placeholder="Số điện thoại">
 
-<select id="province"><option>Chọn Tỉnh/Thành</option></select>
-<select id="district"><option>Chọn Quận/Huyện</option></select>
-<select id="ward"><option>Chọn Phường/Xã</option></select>
+<select id="province" onchange="loadDistrict()">
+<option value="">Chọn tỉnh / thành phố</option>
+</select>
 
-<input id="address" placeholder="Số nhà, thôn/xóm...">
+<select id="district" onchange="loadWard()">
+<option value="">Chọn quận / huyện</option>
+</select>
+
+<select id="ward">
+<option value="">Chọn phường / xã</option>
+</select>
+
+<input id="address" placeholder="Số nhà, tên đường">
+
+<div class="radio">
+<input type="radio" name="goi" value="Rèm chống nắng 1 bộ – 399.000đ" checked>
+ 1 bộ rèm – 399.000đ
+</div>
+<div class="radio">
+<input type="radio" name="goi" value="Rèm chống nắng 2 bộ – 699.000đ">
+ 2 bộ rèm – 699.000đ
+</div>
+
+<br>
 <button onclick="sendOrder()">MUA NGAY</button>
 </div>
 
+</div>
+
 <script>
-/* Countdown */
-let t=600;
+// ĐẾM NGƯỢC
+let time=600;
 setInterval(()=>{
- let m=Math.floor(t/60),s=t%60;
+ let m=Math.floor(time/60);
+ let s=time%60;
  document.getElementById("m").innerText=m;
  document.getElementById("s").innerText=s<10?"0"+s:s;
- if(t>0)t--;
+ time--;
 },1000);
 
-/* Load tỉnh huyện xã */
-const api="https://provinces.open-api.vn/api/";
-fetch(api+"?depth=1").then(r=>r.json()).then(data=>{
- data.forEach(p=>province.innerHTML+=`<option data-id="${p.code}" value="${p.name}">${p.name}</option>`);
-});
-province.onchange=function(){
- let id=this.options[this.selectedIndex].dataset.id;
- fetch(api+"p/"+id+"?depth=2").then(r=>r.json()).then(d=>{
- district.innerHTML="<option>Chọn Quận/Huyện</option>";
- d.districts.forEach(q=>district.innerHTML+=`<option data-id="${q.code}" value="${q.name}">${q.name}</option>`);
- });
+// FULL 63 TỈNH (rút gọn huyện/xã demo, mình có thể gửi bản full chi tiết nếu bạn cần)
+let data={
+"An Giang":{"Long Xuyên":["Mỹ Bình","Mỹ Long"]},
+"Bà Rịa - Vũng Tàu":{"Vũng Tàu":["Thắng Nhì","Thắng Tam"]},
+"Bạc Liêu":{"Bạc Liêu":["Phường 1","Phường 2"]},
+"Bắc Giang":{"Bắc Giang":["Ngô Quyền","Trần Phú"]},
+"Bắc Kạn":{"Bắc Kạn":["Phùng Chí Kiên"]},
+"Bắc Ninh":{"Từ Sơn":["Đông Ngàn"]},
+"Bến Tre":{"Bến Tre":["Phú Khương"]},
+"Bình Dương":{"Thuận An":["An Phú"]},
+"Bình Định":{"Vân Canh":["Canh Hiệp"],"Quy Nhơn":["Ngô Mây"]},
+"Bình Phước":{"Đồng Xoài":["Tân Phú"]},
+"Bình Thuận":{"Phan Thiết":["Phú Thủy"]},
+"Cà Mau":{"Cà Mau":["Phường 5"]},
+"Cần Thơ":{"Ninh Kiều":["An Bình"]},
+"Cao Bằng":{"Cao Bằng":["Hợp Giang"]},
+"Đà Nẵng":{"Hải Châu":["Hòa Thuận"]},
+"Đắk Lắk":{"Buôn Ma Thuột":["Tân Lập"]},
+"Đắk Nông":{"Gia Nghĩa":["Nghĩa Đức"]},
+"Điện Biên":{"Điện Biên Phủ":["Mường Thanh"]},
+"Đồng Nai":{"Biên Hòa":["Tân Hiệp"]},
+"Đồng Tháp":{"Cao Lãnh":["Mỹ Phú"]},
+"Gia Lai":{"Pleiku":["Hoa Lư"]},
+"Hà Giang":{"Hà Giang":["Nguyễn Trãi"]},
+"Hà Nam":{"Phủ Lý":["Minh Khai"]},
+"Hà Nội":{"Đống Đa":["Láng Hạ"],"Hoàng Mai":["Định Công"]},
+"Hà Tĩnh":{"Hà Tĩnh":["Trần Phú"]},
+"Hải Dương":{"Hải Dương":["Ngọc Châu"]},
+"Hải Phòng":{"Lê Chân":["An Biên"]},
+"Hậu Giang":{"Vị Thanh":["Phường 1"]},
+"Hòa Bình":{"Hòa Bình":["Tân Hòa"]},
+"Hưng Yên":{"Hưng Yên":["Hiến Nam"]},
+"Khánh Hòa":{"Nha Trang":["Vĩnh Hải"]},
+"Kiên Giang":{"Rạch Giá":["Vĩnh Lạc"]},
+"Kon Tum":{"Kon Tum":["Thắng Lợi"]},
+"Lai Châu":{"Lai Châu":["Quyết Thắng"]},
+"Lâm Đồng":{"Đà Lạt":["Phường 8"]},
+"Lạng Sơn":{"Lạng Sơn":["Chi Lăng"]},
+"Lào Cai":{"Lào Cai":["Kim Tân"]},
+"Long An":{"Tân An":["Phường 3"]},
+"Nam Định":{"Nam Định":["Vị Hoàng"]},
+"Nghệ An":{"Vinh":["Trường Thi"]},
+"Ninh Bình":{"Ninh Bình":["Ninh Phong"]},
+"Ninh Thuận":{"Phan Rang":["Đô Vinh"]},
+"Phú Thọ":{"Việt Trì":["Nông Trang"]},
+"Phú Yên":{"Tuy Hòa":["Phường 7"]},
+"Quảng Bình":{"Đồng Hới":["Đồng Phú"]},
+"Quảng Nam":{"Tam Kỳ":["An Mỹ"]},
+"Quảng Ngãi":{"Quảng Ngãi":["Nghĩa Chánh"]},
+"Quảng Ninh":{"Hạ Long":["Hồng Hải"]},
+"Quảng Trị":{"Đông Hà":["Phường 1"]},
+"Sóc Trăng":{"Sóc Trăng":["Phường 2"]},
+"Sơn La":{"Sơn La":["Chiềng Lề"]},
+"Tây Ninh":{"Tây Ninh":["Hiệp Ninh"]},
+"Thái Bình":{"Thái Bình":["Trần Lãm"]},
+"Thái Nguyên":{"Thái Nguyên":["Quang Trung"]},
+"Thanh Hóa":{"Thanh Hóa":["Đông Thọ"]},
+"Thừa Thiên Huế":{"Huế":["Vỹ Dạ"]},
+"Tiền Giang":{"Mỹ Tho":["Phường 6"]},
+"TP Hồ Chí Minh":{"Quận 1":["Bến Nghé"],"Quận 12":["Tân Chánh Hiệp"]},
+"Trà Vinh":{"Trà Vinh":["Phường 1"]},
+"Tuyên Quang":{"Tuyên Quang":["Tân Hà"]},
+"Vĩnh Long":{"Vĩnh Long":["Phường 4"]},
+"Vĩnh Phúc":{"Vĩnh Yên":["Tích Sơn"]},
+"Yên Bái":{"Yên Bái":["Yên Thịnh"]}
+};
+
+// load tỉnh
+let provinceSelect=document.getElementById("province");
+for(let p in data){
+ provinceSelect.innerHTML+=`<option>${p}</option>`;
 }
-district.onchange=function(){
- let id=this.options[this.selectedIndex].dataset.id;
- fetch(api+"d/"+id+"?depth=2").then(r=>r.json()).then(d=>{
- ward.innerHTML="<option>Chọn Phường/Xã</option>";
- d.wards.forEach(w=>ward.innerHTML+=`<option value="${w.name}">${w.name}</option>`);
+
+function loadDistrict(){
+ let p=provinceSelect.value;
+ let d=document.getElementById("district");
+ d.innerHTML="<option>Chọn quận / huyện</option>";
+ for(let h in data[p]){
+  d.innerHTML+=`<option>${h}</option>`;
+ }
+}
+
+function loadWard(){
+ let p=provinceSelect.value;
+ let h=document.getElementById("district").value;
+ let w=document.getElementById("ward");
+ w.innerHTML="<option>Chọn phường / xã</option>";
+ data[p][h].forEach(x=>{
+  w.innerHTML+=`<option>${x}</option>`;
  });
 }
 
-/* Gửi về Messenger fanpage */
 function sendOrder(){
  let name=document.getElementById("name").value;
  let phone=document.getElementById("phone").value;
@@ -91,16 +178,16 @@ function sendOrder(){
  let district=document.getElementById("district").value;
  let ward=document.getElementById("ward").value;
  let address=document.getElementById("address").value;
- let combo=document.querySelector('input[name="combo"]:checked').value;
+ let goi=document.querySelector('input[name="goi"]:checked').value;
 
- let msg=`ĐƠN HÀNG RÈM HẢI NAM
-Tên: ${name}
-SĐT: ${phone}
-Combo: ${combo}
-Địa chỉ: ${address}, ${ward}, ${district}, ${province}`;
+ let msg=
+ "🛒 ĐƠN HÀNG RÈM HẢI NAM%0A"+
+ "👤 "+name+"%0A"+
+ "📞 "+phone+"%0A"+
+ "📍 "+address+", "+ward+", "+district+", "+province+"%0A"+
+ "📦 "+goi;
 
- let page="denhatrem.hainam"; // fanpage của bạn
- window.location.href="https://www.facebook.com/messages/t/"+page+"?text="+encodeURIComponent(msg);
+ window.location.href="https://m.me/denhatrem.hainam?ref="+msg;
 }
 </script>
 
