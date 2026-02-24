@@ -1,20 +1,74 @@
-# Website bán rèm cửa
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Shop Rèm Hải Nam</title>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background:#f4f6f8;
+      padding:15px;
+    }
+    .shop{
+      max-width:480px;
+      margin:auto;
+    }
+    .product{
+      background:white;
+      border-radius:12px;
+      padding:15px;
+      margin-bottom:15px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    .product img{
+      width:100%;
+      border-radius:10px;
+    }
+    .price{
+      color:#e74c3c;
+      font-weight:bold;
+      font-size:18px;
+    }
+    input,select,textarea{
+      width:100%;
+      padding:10px;
+      margin-top:6px;
+      border-radius:8px;
+      border:1px solid #ccc;
+    }
+    button{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      font-size:16px;
+      margin-top:10px;
+      cursor:pointer;
+    }
+    .order{
+      background:#27ae60;
+      color:white;
+    }
+  </style>
+</head>
+<body>
 
-Đây là website bán rèm cửa đơn giản được xây dựng bằng HTML để giới thiệu sản phẩm.
+<div class="shop">
+  <h2>🪟 Shop Rèm Hải Nam</h2>
 
-## Tính năng
-- Hiển thị sản phẩm rèm cửa
-- Giao diện đơn giản, dễ sử dụng
-- Có thể chỉnh sửa nội dung sản phẩm
+  <div class="product">
+    <img src="https://i.imgur.com/6XKQZ7U.jpg" alt="Rèm cửa">
+    <h3>Rèm chống nắng cao cấp</h3>
+    <p class="price">199.000đ</p>
+    <p>✔ Chống nắng 100%<br>✔ Dễ dán, không khoan tường<br>✔ Phù hợp phòng trọ, chung cư</p>
+  </div>
 
-## Hướng dẫn sử dụng
-1. Tải project về máy
-2. Mở file `banremcua.html` bằng trình duyệt
-3. Website sẽ hiển thị nội dung bán rèm cửa
+  <h3>📝 Đặt hàng</h3>
+  <input type="text" placeholder="Họ và tên">
+  <input type="tel" placeholder="Số điện thoại">
+  <textarea placeholder="Địa chỉ nhận hàng"></textarea>
+  <button class="order">Gửi đơn hàng</button>
+</div>
 
-## Ghi chú
-- Bạn có thể thay đổi tên sản phẩm, giá và hình ảnh trong file HTML
-- Phù hợp cho người mới học
-
-## Tác giả
-Pham Van Nam
+</body>
+</html>
