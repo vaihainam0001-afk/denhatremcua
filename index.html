@@ -6,90 +6,101 @@
 <style>
 body {
   font-family: Arial, sans-serif;
-  background:#f2f2f2;
+  background: #f2f2f2;
+  padding: 20px;
 }
-.container {
-  max-width:400px;
-  margin:20px auto;
-  background:white;
-  padding:15px;
-  border-radius:10px;
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 img {
-  width:100%;
-  border-radius:10px;
+  width: 100%;
+  border-radius: 10px;
 }
-select,input,textarea,button {
-  width:100%;
-  padding:8px;
-  margin-top:8px;
+select, input, textarea, button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
 }
 .price {
-  color:red;
-  font-size:20px;
-  font-weight:bold;
+  color: red;
+  font-size: 20px;
+  font-weight: bold;
 }
 button {
-  background:#28a745;
-  color:white;
-  border:none;
-  border-radius:5px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
+
 <h2>🪟 Shop Rèm Hải Nam</h2>
 
-<img src="https://i.imgur.com/4AiXzf8.jpg">
+<div class="card">
+  <img src="https://i.imgur.com/8ZQZQZQ.jpg" alt="Rèm cửa">
 
-<h3>Rèm chống nắng cao cấp</h3>
+  <h3>Rèm chống nắng cao cấp</h3>
 
-<label>Chọn kích thước:</label>
-<select id="size" onchange="tinhTien()">
-  <option value="199000">1m x 1.4m - 199.000đ</option>
-  <option value="249000">1.5m x 2m - 249.000đ</option>
-  <option value="299000">2m x 2.5m - 299.000đ</option>
-</select>
+  <label>Chọn kích thước:</label>
+  <select id="size" onchange="tinhTien()">
+    <option value="199000">1m x 2m - 199.000đ</option>
+    <option value="249000">1.5m x 2m - 249.000đ</option>
+    <option value="299000">2m x 2m - 299.000đ</option>
+  </select>
 
-<label>Chọn màu:</label>
-<select id="color">
-  <option>Ghi xám</option>
-  <option>Nâu</option>
-  <option>Xanh</option>
-</select>
+  <label>Chọn màu:</label>
+  <select id="color">
+    <option>Ghi xám</option>
+    <option>Xanh dương</option>
+    <option>Be</option>
+    <option>Nâu</option>
+  </select>
 
-<p>💰 Giá: <span class="price" id="price">199.000đ</span></p>
+  <p class="price" id="price">Giá: 199.000đ</p>
 
-<h3>📦 Đặt hàng</h3>
-<input id="name" placeholder="Họ và tên">
-<input id="phone" placeholder="Số điện thoại">
-<textarea id="address" placeholder="Địa chỉ nhận hàng"></textarea>
+  <h3>📦 Đặt hàng</h3>
+  <input id="name" placeholder="Họ và tên">
+  <input id="phone" placeholder="Số điện thoại">
+  <textarea id="address" placeholder="Địa chỉ nhận hàng"></textarea>
 
-<button onclick="guiZalo()">Gửi đơn hàng</button>
+  <button onclick="guiDon()">📨 Gửi đơn hàng qua Zalo</button>
 </div>
 
 <script>
 function tinhTien() {
   let gia = document.getElementById("size").value;
-  document.getElementById("price").innerText =
-    Number(gia).toLocaleString("vi-VN") + "đ";
+  document.getElementById("price").innerText = "Giá: " + Number(gia).toLocaleString() + "đ";
 }
 
-function guiZalo() {
+function guiDon() {
   let name = document.getElementById("name").value;
   let phone = document.getElementById("phone").value;
   let address = document.getElementById("address").value;
   let size = document.getElementById("size").options[document.getElementById("size").selectedIndex].text;
   let color = document.getElementById("color").value;
-  let price = document.getElementById("price").innerText;
+  let price = document.getElementById("size").value;
 
-  let text = `ĐƠN HÀNG RÈM\n👤 Tên: ${name}\n📞 SĐT: ${phone}\n📏 Size: ${size}\n🎨 Màu: ${color}\n💰 Giá: ${price}\n📍 Địa chỉ: ${address}`;
+  let text =
+    "ĐƠN HÀNG RÈM\n" +
+    "👤 Tên: " + name + "\n" +
+    "📞 SĐT: " + phone + "\n" +
+    "📍 Địa chỉ: " + address + "\n" +
+    "📐 Kích thước: " + size + "\n" +
+    "🎨 Màu: " + color + "\n" +
+    "💰 Giá: " + Number(price).toLocaleString() + "đ";
 
-  let url = "https://zalo.me/0?chatwithmessage=" + encodeURIComponent(text);
-  window.open(url);
+  let url = "https://zalo.me/0903850285?chatwithmessage=" + encodeURIComponent(text);
+  window.open(url, "_blank");
 }
 </script>
+
 </body>
 </html>
