@@ -5,92 +5,87 @@
 <title>Shop Rèm Hải Nam</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{font-family:Arial;background:#f6f6f6;margin:0}
-.container{max-width:420px;margin:auto;background:#fff}
+body{margin:0;font-family:Arial;background:#f2f2f2}
 .header{background:#c62828;color:#fff;padding:15px;text-align:center;font-size:20px;font-weight:bold}
-.product img{width:100%}
-.price{color:red;font-size:22px;font-weight:bold;margin:10px}
-.box{padding:15px}
-input,select{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ccc}
+.banner img{width:100%}
+.section{padding:15px;background:#fff;margin-bottom:10px}
+.price{color:red;font-size:22px;font-weight:bold}
+.combo label{display:block;padding:8px;border:1px solid #ddd;border-radius:8px;margin:6px 0}
+input,select{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #ccc}
 button{width:100%;padding:15px;background:red;color:#fff;border:none;border-radius:8px;font-size:18px}
-.combo{background:#fff3f3;padding:10px;border-radius:10px;margin:10px 0}
 .timer{display:flex;justify-content:center;gap:10px;margin:10px 0}
-.timer div{background:#000;color:#fff;padding:8px 12px;font-size:18px}
+.timer div{background:#000;color:#fff;padding:8px 12px;border-radius:6px}
 </style>
 </head>
 
 <body>
-<div class="container">
 <div class="header">SHOP RÈM HẢI NAM</div>
 
-<div class="product">
+<div class="banner">
 <img src="https://i.imgur.com/j6Q9J5B.jpg">
 </div>
 
-<div class="price">Chỉ từ 199.000đ</div>
-
-<div class="box">
-<h3>Nhận ưu đãi ngay</h3>
+<div class="section">
+<div class="price">🔥 Giảm giá chỉ hôm nay</div>
 <div class="timer">
 <div id="m">10</div>
 <div id="s">00</div>
 </div>
+</div>
 
+<div class="section combo">
+<h3>Chọn combo</h3>
+<label><input type="radio" name="combo" value="Rèm 1m - 199k" checked> Rèm 1m - 199k</label>
+<label><input type="radio" name="combo" value="Rèm 2m - 349k"> Rèm 2m - 349k</label>
+<label><input type="radio" name="combo" value="Rèm 3m - 499k"> Rèm 3m - 499k</label>
+</div>
+
+<div class="section">
+<h3>Thông tin khách hàng</h3>
 <input id="name" placeholder="Họ và tên">
 <input id="phone" placeholder="Số điện thoại">
 
 <select id="province"><option>Chọn Tỉnh/Thành</option></select>
 <select id="district"><option>Chọn Quận/Huyện</option></select>
 <select id="ward"><option>Chọn Phường/Xã</option></select>
-<input id="address" placeholder="Địa chỉ chi tiết (số nhà, thôn...)">
 
-<div class="combo">
-<label><input type="radio" name="combo" value="Rèm 1m - 199k" checked> Rèm 1m - 199k</label><br>
-<label><input type="radio" name="combo" value="Rèm 2m - 349k"> Rèm 2m - 349k</label><br>
-<label><input type="radio" name="combo" value="Rèm 3m - 499k"> Rèm 3m - 499k</label>
-</div>
-
+<input id="address" placeholder="Số nhà, thôn/xóm...">
 <button onclick="sendOrder()">MUA NGAY</button>
-</div>
 </div>
 
 <script>
-/* COUNTDOWN */
-let time=600;
+/* Countdown */
+let t=600;
 setInterval(()=>{
- let m=Math.floor(time/60);
- let s=time%60;
+ let m=Math.floor(t/60),s=t%60;
  document.getElementById("m").innerText=m;
  document.getElementById("s").innerText=s<10?"0"+s:s;
- if(time>0)time--;
+ if(t>0)t--;
 },1000);
 
-/* LOAD TỈNH HUYỆN XÃ */
-const host="https://provinces.open-api.vn/api/";
-fetch(host+"?depth=1").then(r=>r.json()).then(data=>{
- let p=document.getElementById("province");
- data.forEach(e=>p.innerHTML+=`<option data-id="${e.code}" value="${e.name}">${e.name}</option>`);
+/* Load tỉnh huyện xã */
+const api="https://provinces.open-api.vn/api/";
+fetch(api+"?depth=1").then(r=>r.json()).then(data=>{
+ data.forEach(p=>province.innerHTML+=`<option data-id="${p.code}" value="${p.name}">${p.name}</option>`);
 });
-
 province.onchange=function(){
  let id=this.options[this.selectedIndex].dataset.id;
- fetch(host+"p/"+id+"?depth=2").then(r=>r.json()).then(d=>{
+ fetch(api+"p/"+id+"?depth=2").then(r=>r.json()).then(d=>{
  district.innerHTML="<option>Chọn Quận/Huyện</option>";
- d.districts.forEach(e=>district.innerHTML+=`<option data-id="${e.code}" value="${e.name}">${e.name}</option>`);
+ d.districts.forEach(q=>district.innerHTML+=`<option data-id="${q.code}" value="${q.name}">${q.name}</option>`);
  });
 }
-
 district.onchange=function(){
  let id=this.options[this.selectedIndex].dataset.id;
- fetch(host+"d/"+id+"?depth=2").then(r=>r.json()).then(d=>{
+ fetch(api+"d/"+id+"?depth=2").then(r=>r.json()).then(d=>{
  ward.innerHTML="<option>Chọn Phường/Xã</option>";
- d.wards.forEach(e=>ward.innerHTML+=`<option value="${e.name}">${e.name}</option>`);
+ d.wards.forEach(w=>ward.innerHTML+=`<option value="${w.name}">${w.name}</option>`);
  });
 }
 
-/* GỬI ĐƠN VỀ MESSENGER */
+/* Gửi về Messenger fanpage */
 function sendOrder(){
- let name=nameInput();
+ let name=document.getElementById("name").value;
  let phone=document.getElementById("phone").value;
  let province=document.getElementById("province").value;
  let district=document.getElementById("district").value;
@@ -99,18 +94,13 @@ function sendOrder(){
  let combo=document.querySelector('input[name="combo"]:checked').value;
 
  let msg=`ĐƠN HÀNG RÈM HẢI NAM
-👤 Tên: ${name}
-📞 SĐT: ${phone}
-📦 Combo: ${combo}
-🏠 Địa chỉ: ${address}, ${ward}, ${district}, ${province}`;
+Tên: ${name}
+SĐT: ${phone}
+Combo: ${combo}
+Địa chỉ: ${address}, ${ward}, ${district}, ${province}`;
 
- let page="denhatrem.hainam"; // FANPAGE CỦA BẠN
-
+ let page="denhatrem.hainam"; // fanpage của bạn
  window.location.href="https://www.facebook.com/messages/t/"+page+"?text="+encodeURIComponent(msg);
-}
-
-function nameInput(){
- return document.getElementById("name").value;
 }
 </script>
 
