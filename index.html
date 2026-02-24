@@ -4,101 +4,97 @@
 <meta charset="UTF-8">
 <title>Shop Rèm Hải Nam</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  padding: 20px;
+body{margin:0;font-family:Arial;background:#f2f2f2}
+.container{max-width:420px;margin:auto;background:#fff}
+.header{background:#c62828;color:#fff;padding:15px;text-align:center}
+.price{color:#e53935;font-size:22px;font-weight:bold}
+.product-img{width:100%}
+.box{padding:12px;border-bottom:1px solid #ddd}
+select,input,textarea,button{
+  width:100%;padding:10px;margin-top:8px;border-radius:6px;border:1px solid #ccc
 }
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 400px;
-  margin: auto;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-img {
-  width: 100%;
-  border-radius: 10px;
-}
-select, input, textarea, button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-}
-.price {
-  color: red;
-  font-size: 20px;
-  font-weight: bold;
-}
-button {
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
+button{background:#e53935;color:white;font-size:16px;border:none}
+.zalo{background:#2196f3}
+.mess{background:#4267B2}
+.contact{display:flex;gap:10px;padding:10px}
+.badge{background:#ffebee;color:#c62828;padding:5px 10px;border-radius:20px;display:inline-block;margin-bottom:5px}
 </style>
 </head>
 
 <body>
+<div class="container">
 
+<div class="header">
 <h2>🪟 Shop Rèm Hải Nam</h2>
+<p>Rèm cửa chống nắng cao cấp</p>
+</div>
 
-<div class="card">
-  <img src="https://i.imgur.com/8ZQZQZQ.jpg" alt="Rèm cửa">
+<img src="https://i.imgur.com/qZ9QZ6F.jpg" class="product-img">
 
-  <h3>Rèm chống nắng cao cấp</h3>
+<div class="box">
+<span class="badge">BÁN CHẠY</span>
+<h3>Rèm cửa dán tường không khoan</h3>
+<p class="price">199.000đ</p>
+<ul>
+<li>✔ Chống nắng 100%</li>
+<li>✔ Không khoan tường</li>
+<li>✔ Phù hợp phòng trọ – chung cư</li>
+</ul>
+</div>
 
-  <label>Chọn kích thước:</label>
-  <select id="size" onchange="tinhTien()">
-    <option value="199000">1m x 2m - 199.000đ</option>
-    <option value="249000">1.5m x 2m - 249.000đ</option>
-    <option value="299000">2m x 2m - 299.000đ</option>
-  </select>
+<div class="box">
+<h3>🎨 Chọn màu</h3>
+<select id="color">
+<option>Be</option>
+<option>Xám</option>
+<option>Xanh</option>
+<option>Hồng</option>
+</select>
 
-  <label>Chọn màu:</label>
-  <select id="color">
-    <option>Ghi xám</option>
-    <option>Xanh dương</option>
-    <option>Be</option>
-    <option>Nâu</option>
-  </select>
+<h3>📏 Chọn kích thước</h3>
+<select id="size">
+<option>1m x 1m8</option>
+<option>1m2 x 2m</option>
+<option>1m5 x 2m</option>
+</select>
+</div>
 
-  <p class="price" id="price">Giá: 199.000đ</p>
+<div class="box">
+<h3>📦 ĐẶT HÀNG NGAY</h3>
+<input id="name" placeholder="Họ và tên">
+<input id="phone" placeholder="Số điện thoại">
+<textarea id="address" placeholder="Địa chỉ nhận hàng"></textarea>
+<button onclick="sendOrder()">ĐẶT HÀNG NGAY</button>
+</div>
 
-  <h3>📦 Đặt hàng</h3>
-  <input id="name" placeholder="Họ và tên">
-  <input id="phone" placeholder="Số điện thoại">
-  <textarea id="address" placeholder="Địa chỉ nhận hàng"></textarea>
+<div class="contact">
+<a href="https://zalo.me/84903850285" target="_blank" style="flex:1;">
+<button class="zalo">💬 Chat Zalo</button>
+</a>
 
-  <button onclick="guiDon()">📨 Gửi đơn hàng qua Zalo</button>
+<a href="https://m.me/" target="_blank" style="flex:1;">
+<button class="mess">💬 Messenger</button>
+</a>
+</div>
+
 </div>
 
 <script>
-function tinhTien() {
-  let gia = document.getElementById("size").value;
-  document.getElementById("price").innerText = "Giá: " + Number(gia).toLocaleString() + "đ";
-}
+function sendOrder(){
+var name=document.getElementById("name").value;
+var phone=document.getElementById("phone").value;
+var address=document.getElementById("address").value;
+var color=document.getElementById("color").value;
+var size=document.getElementById("size").value;
 
-function guiDon() {
-  let name = document.getElementById("name").value;
-  let phone = document.getElementById("phone").value;
-  let address = document.getElementById("address").value;
-  let size = document.getElementById("size").options[document.getElementById("size").selectedIndex].text;
-  let color = document.getElementById("color").value;
-  let price = document.getElementById("size").value;
+var text="ĐƠN HÀNG RÈM CỬA%0A"
++"Tên: "+name+"%0A"
++"SĐT: "+phone+"%0A"
++"Địa chỉ: "+address+"%0A"
++"Màu: "+color+"%0A"
++"Kích thước: "+size;
 
-  let text =
-    "ĐƠN HÀNG RÈM\n" +
-    "👤 Tên: " + name + "\n" +
-    "📞 SĐT: " + phone + "\n" +
-    "📍 Địa chỉ: " + address + "\n" +
-    "📐 Kích thước: " + size + "\n" +
-    "🎨 Màu: " + color + "\n" +
-    "💰 Giá: " + Number(price).toLocaleString() + "đ";
-
-  let url = "https://zalo.me/84903850285?chatwithmessage=" + encodeURIComponent(text);
-  window.open(url, "_blank");
+window.open("https://zalo.me/84903850285?text="+text);
 }
 </script>
 
