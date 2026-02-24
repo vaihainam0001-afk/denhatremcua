@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Shop Rèm Hải Nam</title>
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f4f6f8;
+  padding:15px;
+}
+.shop{
+  max-width:480px;
+  margin:auto;
+}
+.product{
+  background:white;
+  border-radius:12px;
+  padding:15px;
+  margin-bottom:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+.product img{
+  width:100%;
+  border-radius:10px;
+}
+.price{
+  color:#e74c3c;
+  font-weight:bold;
+  font-size:18px;
+}
+input,select,textarea{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  margin-top:10px;
+  cursor:pointer;
+}
+.order{background:#27ae60;color:white;}
+.contact{background:#2980b9;color:white;}
+.total{
+  font-size:18px;
+  font-weight:bold;
+  margin-top:10px;
+}
+h2{text-align:center;}
+</style>
+</head>
+
+<body>
+<div class="shop">
+
+<h2>🛍 SHOP RÈM HẢI NAM</h2>
+
+<div class="product">
+<img src="https://i.imgur.com/4YQZ6G5.jpg">
+<h3>Rèm cửa chống nắng</h3>
+<p class="price">150.000 đ / mét</p>
+
+<select id="color">
+<option>Trắng</option>
+<option>Xám</option>
+<option>Xanh</option>
+<option>Nâu</option>
+</select>
+
+<select id="size" onchange="calcTotal()">
+<option value="1">1m</option>
+<option value="1.5">1m5</option>
+<option value="2">2m</option>
+<option value="2.5">2m5</option>
+</select>
+
+<input id="qty" type="number" value="1" min="1" onchange="calcTotal()">
+
+<div class="total">Tổng: <span id="total">150000</span> đ</div>
+</div>
+
+<h3>📋 Thông tin khách hàng</h3>
+<input id="name" placeholder="Họ tên">
+<input id="phone" placeholder="Số điện thoại">
+<input id="address" placeholder="Địa chỉ">
+<textarea id="note" placeholder="Ghi chú cho shop"></textarea>
+
+<button class="order" onclick="orderNow()">🛒 ĐẶT MUA NGAY</button>
+<button class="contact" onclick="contact()">💬 LIÊN HỆ SHOP</button>
+
+</div>
+
+<script>
+function calcTotal(){
+  var price=150000;
+  var size=document.getElementById("size").value;
+  var qty=document.getElementById("qty").value;
+  var total=price*size*qty;
+  document.getElementById("total").innerText=total;
+}
+
+function orderNow(){
+  var color=document.getElementById("color").value;
+  var size=document.getElementById("size").value;
+  var qty=document.getElementById("qty").value;
+  var total=document.getElementById("total").innerText;
+  var name=document.getElementById("name").value;
+  var phone=document.getElementById("phone").value;
+  var address=document.getElementById("address").value;
+  var note=document.getElementById("note").value;
+
+  var message=
+  "🛒 ĐƠN HÀNG\n"
+  +"Màu: "+color+"\n"
+  +"Kích thước: "+size+"m\n"
+  +"Số lượng: "+qty+"\n"
+  +"Tổng tiền: "+total+"đ\n"
+  +"Tên: "+name+"\n"
+  +"SĐT: "+phone+"\n"
+  +"Địa chỉ: "+address+"\n"
+  +"Ghi chú: "+note;
+
+  window.open("https://m.me/denhatrem.hainam?text="+encodeURIComponent(message),"_blank");
+}
+
+function contact(){
+  window.open("https://m.me/denhatrem.hainam","_blank");
+}
+</script>
+</body>
+</html>
