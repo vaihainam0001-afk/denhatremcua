@@ -3,185 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <title>Shop Rèm Hải Nam</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body{margin:0;font-family:Arial;background:#f2f2f2}
+body{font-family:Arial;background:#f6f6f6;margin:0}
 .container{max-width:420px;margin:auto;background:#fff}
-.header{background:#c62828;color:#fff;padding:10px;text-align:center}
-.logo{width:60px;border-radius:50%}
-.price{color:#e53935;font-size:22px;font-weight:bold}
-.box{padding:12px;border-bottom:1px solid #eee}
-select,input{width:100%;padding:10px;margin-top:6px;border-radius:6px;border:1px solid #ccc}
-button{width:100%;padding:12px;border:none;border-radius:8px;font-size:17px;background:#e53935;color:#fff}
-.zalo{background:#0068ff}
-.fixed{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:8px;box-shadow:0 -2px 5px rgba(0,0,0,0.1)}
-.badge{background:#ffebee;color:#c62828;padding:4px 10px;border-radius:20px;display:inline-block;margin-bottom:5px}
-ul{padding-left:18px}
-img,video{width:100%;border-radius:10px}
-.review{background:#fafafa;padding:8px;border-radius:8px;margin:5px 0}
-.slider{position:relative}
-.slide{display:none}
-.slide.active{display:block}
-.countdown{background:#fff3e0;color:#e65100;padding:10px;text-align:center;font-weight:bold}
-.product-btn{background:#4caf50;margin-top:6px}
+.header{background:#c62828;color:#fff;padding:15px;text-align:center;font-size:20px;font-weight:bold}
+.product img{width:100%}
+.price{color:red;font-size:22px;font-weight:bold;margin:10px}
+.box{padding:15px}
+input,select{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #ccc}
+button{width:100%;padding:15px;background:red;color:#fff;border:none;border-radius:8px;font-size:18px}
+.combo{background:#fff3f3;padding:10px;border-radius:10px;margin:10px 0}
+.timer{display:flex;justify-content:center;gap:10px;margin:10px 0}
+.timer div{background:#000;color:#fff;padding:8px 12px;font-size:18px}
 </style>
 </head>
+
 <body>
-
 <div class="container">
+<div class="header">SHOP RÈM HẢI NAM</div>
 
-<div class="header">
-<img src="https://i.imgur.com/9QK4JvN.jpg" class="logo"><br>
-<b>SHOP RÈM HẢI NAM</b><br>
-Rèm cửa chống nắng cao cấp
+<div class="product">
+<img src="https://i.imgur.com/j6Q9J5B.jpg">
 </div>
 
-<div class="countdown">
-⏰ KHUYẾN MÃI KẾT THÚC SAU: <span id="time">10:00</span>
-</div>
-
-<!-- VIDEO SẢN PHẨM -->
-<div class="box">
-<video controls>
-  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-</video>
-</div>
-
-<!-- SLIDE ẢNH -->
-<div class="slider">
-<img src="https://i.imgur.com/qZ9QZ6F.jpg" class="slide active">
-<img src="https://i.imgur.com/4YQZ6G5.jpg" class="slide">
-<img src="https://i.imgur.com/9QK4JvN.jpg" class="slide">
-</div>
+<div class="price">Chỉ từ 199.000đ</div>
 
 <div class="box">
-<span class="badge">BÁN CHẠY</span>
-<h3 id="pname">Rèm cửa dán tường không khoan</h3>
-<p class="price"><span id="price">199000</span> đ</p>
-<ul>
-<li>Chống nắng 100%</li>
-<li>Không khoan tường</li>
-<li>Phù hợp phòng trọ – chung cư</li>
-</ul>
+<h3>Nhận ưu đãi ngay</h3>
+<div class="timer">
+<div id="m">10</div>
+<div id="s">00</div>
 </div>
 
-<div class="box">
-<h4>🛒 CHỌN SẢN PHẨM</h4>
-<button class="product-btn" onclick="selectProduct(1)">Rèm chống nắng</button>
-<button class="product-btn" onclick="selectProduct(2)">Rèm cách nhiệt</button>
-<button class="product-btn" onclick="selectProduct(3)">Rèm trang trí</button>
-</div>
-
-<div class="box">
-<h4>🎨 Chọn màu</h4>
-<select id="color">
-<option>Xám</option>
-<option>Be</option>
-<option>Xanh</option>
-<option>Hồng</option>
-</select>
-
-<h4>📏 Chọn kích thước</h4>
-<select id="size" onchange="calcTotal()">
-<option value="1">1m x 2m</option>
-<option value="1.2">1m2 x 2m</option>
-<option value="1.5">1m5 x 2m</option>
-</select>
-
-<h4>📦 Số lượng</h4>
-<input type="number" id="qty" value="1" min="1" onchange="calcTotal()">
-
-<p><b>Tổng tiền:</b> <span id="total">199000</span> đ</p>
-</div>
-
-<div class="box">
-<h4>⭐ ĐÁNH GIÁ KHÁCH HÀNG</h4>
-<div class="review">⭐⭐⭐⭐⭐ Rèm đẹp, che nắng rất tốt</div>
-<div class="review">⭐⭐⭐⭐⭐ Giao hàng nhanh, lắp dễ</div>
-<div class="review">⭐⭐⭐⭐ Rất đáng tiền</div>
-</div>
-
-<div class="box">
-<h4>🧾 THÔNG TIN KHÁCH HÀNG</h4>
 <input id="name" placeholder="Họ và tên">
 <input id="phone" placeholder="Số điện thoại">
-<input id="address" placeholder="Địa chỉ nhận hàng">
-<button onclick="sendOrder()">ĐẶT HÀNG NGAY</button>
+
+<select id="province"><option>Chọn Tỉnh/Thành</option></select>
+<select id="district"><option>Chọn Quận/Huyện</option></select>
+<select id="ward"><option>Chọn Phường/Xã</option></select>
+<input id="address" placeholder="Địa chỉ chi tiết (số nhà, thôn...)">
+
+<div class="combo">
+<label><input type="radio" name="combo" value="Rèm 1m - 199k" checked> Rèm 1m - 199k</label><br>
+<label><input type="radio" name="combo" value="Rèm 2m - 349k"> Rèm 2m - 349k</label><br>
+<label><input type="radio" name="combo" value="Rèm 3m - 499k"> Rèm 3m - 499k</label>
 </div>
 
-<div class="box">
-<a href="https://zalo.me/84903850285" target="_blank">
-<button class="zalo">💬 CHAT ZALO</button>
-</a>
+<button onclick="sendOrder()">MUA NGAY</button>
 </div>
-
-</div>
-
-<div class="fixed">
-<button onclick="sendOrder()">🔥 ĐẶT HÀNG NGAY</button>
 </div>
 
 <script>
-var price = 199000;
-
-// slider
-var slides=document.getElementsByClassName("slide");
-var index=0;
-setInterval(function(){
-slides[index].classList.remove("active");
-index=(index+1)%slides.length;
-slides[index].classList.add("active");
-},3000);
-
-// countdown
-var seconds=600;
-setInterval(function(){
-var m=Math.floor(seconds/60);
-var s=seconds%60;
-document.getElementById("time").innerText=m+":"+(s<10?"0"+s:s);
-if(seconds>0) seconds--;
+/* COUNTDOWN */
+let time=600;
+setInterval(()=>{
+ let m=Math.floor(time/60);
+ let s=time%60;
+ document.getElementById("m").innerText=m;
+ document.getElementById("s").innerText=s<10?"0"+s:s;
+ if(time>0)time--;
 },1000);
 
-function selectProduct(id){
-if(id==1){price=199000;document.getElementById("pname").innerText="Rèm chống nắng";}
-if(id==2){price=249000;document.getElementById("pname").innerText="Rèm cách nhiệt";}
-if(id==3){price=179000;document.getElementById("pname").innerText="Rèm trang trí";}
-document.getElementById("price").innerText=price;
-calcTotal();
+/* LOAD TỈNH HUYỆN XÃ */
+const host="https://provinces.open-api.vn/api/";
+fetch(host+"?depth=1").then(r=>r.json()).then(data=>{
+ let p=document.getElementById("province");
+ data.forEach(e=>p.innerHTML+=`<option data-id="${e.code}" value="${e.name}">${e.name}</option>`);
+});
+
+province.onchange=function(){
+ let id=this.options[this.selectedIndex].dataset.id;
+ fetch(host+"p/"+id+"?depth=2").then(r=>r.json()).then(d=>{
+ district.innerHTML="<option>Chọn Quận/Huyện</option>";
+ d.districts.forEach(e=>district.innerHTML+=`<option data-id="${e.code}" value="${e.name}">${e.name}</option>`);
+ });
 }
 
-function calcTotal(){
-var size=document.getElementById("size").value;
-var qty=document.getElementById("qty").value;
-var total=price*size*qty;
-document.getElementById("total").innerText=total;
+district.onchange=function(){
+ let id=this.options[this.selectedIndex].dataset.id;
+ fetch(host+"d/"+id+"?depth=2").then(r=>r.json()).then(d=>{
+ ward.innerHTML="<option>Chọn Phường/Xã</option>";
+ d.wards.forEach(e=>ward.innerHTML+=`<option value="${e.name}">${e.name}</option>`);
+ });
 }
 
+/* GỬI ĐƠN VỀ MESSENGER */
 function sendOrder(){
-var name=document.getElementById("name").value;
-var phone=document.getElementById("phone").value;
-var address=document.getElementById("address").value;
-var color=document.getElementById("color").value;
-var sizeText=document.getElementById("size").options[document.getElementById("size").selectedIndex].text;
-var qty=document.getElementById("qty").value;
-var total=document.getElementById("total").innerText;
-var pname=document.getElementById("pname").innerText;
+ let name=nameInput();
+ let phone=document.getElementById("phone").value;
+ let province=document.getElementById("province").value;
+ let district=document.getElementById("district").value;
+ let ward=document.getElementById("ward").value;
+ let address=document.getElementById("address").value;
+ let combo=document.querySelector('input[name="combo"]:checked').value;
 
-if(name==""||phone==""||address==""){
-alert("Vui lòng nhập đầy đủ thông tin");
-return;
+ let msg=`ĐƠN HÀNG RÈM HẢI NAM
+👤 Tên: ${name}
+📞 SĐT: ${phone}
+📦 Combo: ${combo}
+🏠 Địa chỉ: ${address}, ${ward}, ${district}, ${province}`;
+
+ let page="denhatrem.hainam"; // FANPAGE CỦA BẠN
+
+ window.location.href="https://www.facebook.com/messages/t/"+page+"?text="+encodeURIComponent(msg);
 }
 
-var text="🧾 ĐƠN HÀNG RÈM HẢI NAM%0A"+
-"Sản phẩm: "+pname+"%0A"+
-"Tên: "+name+"%0A"+
-"SĐT: "+phone+"%0A"+
-"Địa chỉ: "+address+"%0A"+
-"Màu: "+color+"%0A"+
-"Kích thước: "+sizeText+"%0A"+
-"Số lượng: "+qty+"%0A"+
-"Tổng tiền: "+total+"đ";
-
-window.open("https://m.me/denhatrem.hainam?text="+text,"_blank");
+function nameInput(){
+ return document.getElementById("name").value;
 }
 </script>
 
